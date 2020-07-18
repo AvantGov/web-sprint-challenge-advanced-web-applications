@@ -14,14 +14,21 @@ const ColorList = ({ colors, updateColors }) => {
   const editColor = color => {
     setEditing(true);
     setColorToEdit(color);
-    console.log(color)
+    console.log(colorToEdit)
   };
 
   const saveEdit = e => {
     e.preventDefault();
-    // Make a put request to save your updated color
-    // think about where will you get the id from...
-    // where is is saved right now?
+    axiosWAuth()
+    .put(`/colors/${colorToEdit.id}`, colorToEdit)
+      .then((response) => {
+        console.log('mod response:', response)
+        setEditing(false)
+        window.location.reload(false)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   };
 
   const deleteColor = color => {
@@ -92,6 +99,9 @@ const ColorList = ({ colors, updateColors }) => {
       )}
       <div className="spacer" />
       {/* stretch - build another form here to add a color */}
+      
+
+
     </div>
   );
 };
